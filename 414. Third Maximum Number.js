@@ -3,20 +3,32 @@
  * @return {number}
  */
 var thirdMax = function(nums) {
-    let N = nums.length;
-    let m1=-Infinity,m2=-Infinity,m3=-Infinity;
-    for(let i=0;i<N;i++){
-        if (nums[i] === m1 || nums[i] === m2 || nums[i] === m3) continue;
-        if(nums[i]>m1){
-            m3=m2;
-            m2=m1;
-            m1= nums[i];
-        }else if(nums[i]>m2){
-            m3=m2;
-            m2= nums[i];
-        }else if(nums[i]>m3){
-            m3= nums[i];
+    let maxNumber = {
+        max1: -Infinity,
+        max2: -Infinity,
+        max3: -Infinity
+    }
+
+    for (let i = 0; i < nums.length; i++) {
+        if (nums[i] >= maxNumber.max1) {
+            if (maxNumber.max1 !== nums[i]) {
+                maxNumber.max3 = maxNumber.max2;
+                maxNumber.max2 = maxNumber.max1;
+            }
+            maxNumber.max1 = nums[i];
+        } else if (nums[i] >= maxNumber.max2) {
+            if (maxNumber.max2 !== nums[i]) {
+                maxNumber.max3 = maxNumber.max2;
+            }
+            maxNumber.max2 = nums[i];
+        } else if (nums[i] >= maxNumber.max3) {
+            maxNumber.max3 = nums[i];
         }
-    };
-    return m3 == -Infinity ? m1 :m3;
+    }
+
+    if (maxNumber.max3 === -Infinity) {
+        return maxNumber.max1;
+    }
+
+    return maxNumber.max3;
 };
